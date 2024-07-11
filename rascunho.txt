@@ -1,0 +1,45 @@
+void encontrarFilmes(const string &arquivoNome,  const string &tconst, const string &tipoDesejado, const string &tituloOriginal, bool isAdult, const int &ano, int limiteInferior, int limiteSuperior, const string &genero) {
+    string linha;
+    ifstream arquivo(arquivoNome);
+
+    if (!arquivo.is_open()) {
+      cout << "Erro ao abrir o arquivo." << endl;
+      return;
+    }
+
+    for (int i = 1; i <= 39400; i++) {
+      getline(arquivo, linha);
+      stringstream ss(linha);
+      Filme filme;
+
+      // Lê os campos da linha e armazena na estrutura Filme
+      getline(ss, filme.tconst, '\t');
+      getline(ss, filme.titleType, '\t');
+      getline(ss, filme.primaryTitle, '\t');
+      getline(ss, filme.originalTitle, '\t');
+      ss >> filme.isAdult;
+      ss.ignore(); // Ignora o separador '\t'
+      ss >> filme.startYear;
+      ss.ignore();
+      getline(ss, filme.endYear, '\t');
+      getline(ss, filme.runtimeMinutes, '\t');
+      getline(ss, filme.genres);
+
+      // Verifica se o tipo do filme corresponde ao tipo desejado
+      if (tconst==filme.tconst || tipoDesejado==filme.titleType || tituloOriginal==filme.originalTitle || isAdult==filme.isAdult || ano==filme.startYear || genero==filme.genres) {
+        if (filme.titleType == tipoDesejado) {
+          cout << "tconst: " << filme.tconst << endl;
+          cout << "titleType: " << filme.titleType << endl;
+          cout << "primaryTitle: " << filme.primaryTitle << endl;
+          cout << "originalTitle: " << filme.originalTitle << endl;
+          cout << "isAdult: " << filme.isAdult << endl;
+          cout << "startYear: " << filme.startYear << endl;
+          cout << "endYear: " << filme.endYear << endl;
+          cout << "runtimeMinutes: " << filme.runtimeMinutes << endl;
+          cout << "genres: " << filme.genres << endl;
+          cout << "--------------------------" << endl;
+        }
+    }
+
+    arquivo.close();
+  }
